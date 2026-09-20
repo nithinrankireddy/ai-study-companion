@@ -1,4 +1,8 @@
+import os
+from dotenv import load_dotenv
 from fastapi import FastAPI
+
+load_dotenv()
 from fastapi.middleware.cors import CORSMiddleware
 from .workspace_routes import router as workspace_router
 from .material_routes import router as material_router
@@ -26,8 +30,8 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
-    allow_credentials=True,
+    allow_origins=[os.getenv("FRONTEND_URL", "*")],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
